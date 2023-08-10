@@ -12,10 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.List;
+
 @Entity
 @Data
 @ToString
-@Table(name = "blogs")
+@Table(name = "blog")
 @RequiredArgsConstructor
 public class Blog {
     @Id
@@ -37,7 +39,9 @@ public class Blog {
     @NotNull
     private User user;
 
-    // TODO: 10/08/2023 add comments
+
+    @OneToMany(mappedBy = "blog")
+    private List<Comment> comments;
 
     @Column(name = "created_at", nullable = true, updatable = false)
     private java.sql.Date createdAt;

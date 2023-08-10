@@ -51,7 +51,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                 configurer
 
-                        .requestMatchers( "/api/v1/post/**").hasRole("USER")
+                        .requestMatchers( "/api/v1/blog/**").hasRole("USER")
                         .requestMatchers( "/api/v1/me").hasRole("USER")
                         .requestMatchers( "/api/v1/users/**").hasRole("USER")
                         .requestMatchers( "/api/v1/friends/**").hasRole("USER")
