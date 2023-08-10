@@ -1,15 +1,11 @@
 package com.example.travelblog.controller;
 
+import com.example.travelblog.models.Role;
 import com.example.travelblog.models.User;
 import com.example.travelblog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /*
  * @created 10/08/2023 - 10:33 AM
@@ -30,6 +26,12 @@ public class UserController {
     @GetMapping("{id}")
     public User getUserData(@PathVariable("id") Long id){
         return userService.findById(id);
+    }
+
+    @PutMapping("/me/make-guide")
+    public String makeMeGuide(Authentication authentication){
+        userService.attachRoleToUser(((User) authentication.getPrincipal()).getEmail(), "ROLE_GUIDE");
+        return "updated";
     }
 
 }

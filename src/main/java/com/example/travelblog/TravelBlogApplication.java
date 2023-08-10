@@ -18,18 +18,14 @@ public class TravelBlogApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserService userService) {
         return args -> {
-
             userService.addRole(new Role("ROLE_USER"));
-
-            UserRequest user = new UserRequest("yosef", "yosef@gmail.com", "fun123");
-
-            userService.addUser(user);
-
+            userService.addRole(new Role("ROLE_GUIDE"));
             userService.addRole(new Role("ROLE_ADMIN"));
 
+
+            UserRequest user = new UserRequest("yosef", "yosef@gmail.com", "fun123");
+            userService.addUser(user);
             userService.attachRoleToUser("yosef@gmail.com", "ROLE_ADMIN");
-
-
         };
     }
 
