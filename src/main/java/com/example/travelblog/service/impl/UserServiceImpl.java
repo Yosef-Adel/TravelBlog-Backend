@@ -1,5 +1,6 @@
 package com.example.travelblog.service.impl;
 
+import com.example.travelblog.controller.request.UserRequest;
 import com.example.travelblog.dao.RoleDao;
 import com.example.travelblog.dao.UserDao;
 import com.example.travelblog.models.Role;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
+    public User addUser(UserRequest user) {
 
         if (userDao.isEmailExist(user.getEmail())){
             throw new UsernameNotFoundException("Email Already Exists.....");

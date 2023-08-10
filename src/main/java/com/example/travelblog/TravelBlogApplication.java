@@ -1,5 +1,6 @@
 package com.example.travelblog;
 
+import com.example.travelblog.controller.request.UserRequest;
 import com.example.travelblog.models.Role;
 import com.example.travelblog.models.User;
 import com.example.travelblog.service.UserService;
@@ -20,7 +21,7 @@ public class TravelBlogApplication {
 
             userService.addRole(new Role("ROLE_USER"));
 
-            User user = new User("yosef", "yosef@gmail.com", "fun123");
+            UserRequest user = new UserRequest("yosef", "yosef@gmail.com", "fun123");
 
             userService.addUser(user);
 
