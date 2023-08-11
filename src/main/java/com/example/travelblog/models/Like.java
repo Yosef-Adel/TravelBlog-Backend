@@ -16,7 +16,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Table(name = "likes")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "likable_type")
-@ToString
 @RequiredArgsConstructor
 public class Like {
     @Id
@@ -24,12 +23,11 @@ public class Like {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "text")
-    private String text;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
     private User user;
+
 
 }

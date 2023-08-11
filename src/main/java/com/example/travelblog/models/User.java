@@ -6,6 +6,7 @@ package com.example.travelblog.models;
  * @author Yosef Adel Mahmoud Saaid
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -14,11 +15,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 @Entity
 @Data
 @Table(name = "users")
-@ToString
 public class User {
     @Id
     @GeneratedValue
@@ -44,7 +45,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles ;//new ArrayList<Role>(Arrays.asList(new Role("ROLE_USER")));
 
-    // TODO: 10/08/2023 add posts
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Blog> BLogList;
+
 
 
     @Column(name = "created_at", nullable = true, updatable = false)
@@ -75,8 +82,6 @@ public class User {
     public boolean isAdmin() {
         return roles.stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
     }
-
-
 
 
 }

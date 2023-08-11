@@ -33,7 +33,12 @@ public class BlogController {
         return blogService.updateBlog(id, postRequest, (User) authentication.getPrincipal());
     }
 
-    // TODO: Add delete blog method
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Authentication authentication) {
+        System.out.println(authentication.getPrincipal());
+        blogService.deleteBlog(id, (User) authentication.getPrincipal());
+        return "deleted";
+    }
 
     @GetMapping("/user/{id}")
     public List<Blog> getUserPosts(@PathVariable(name = "id") Long id) {

@@ -16,7 +16,6 @@ import lombok.ToString;
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +28,6 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
+
+
 }

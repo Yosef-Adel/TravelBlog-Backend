@@ -16,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString
 @Table(name = "blog")
 @RequiredArgsConstructor
 public class Blog {
@@ -49,5 +48,6 @@ public class Blog {
     // @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at",  nullable = true)
     private java.sql.Date updatedAt;
+
 
 }

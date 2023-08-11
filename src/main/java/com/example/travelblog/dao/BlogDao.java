@@ -3,6 +3,7 @@ package com.example.travelblog.dao;
 import com.example.travelblog.models.Blog;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
  * @created 10/08/2023 - 12:45 PM
@@ -21,7 +22,7 @@ public interface BlogDao {
 
     List<Blog> getBlogByUser(long id);
 
-    Blog getBlogById(long id);
+    Optional<Blog> getBlogById(long id);
 
 
 }

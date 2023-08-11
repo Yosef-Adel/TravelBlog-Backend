@@ -2,6 +2,7 @@ package com.example.travelblog.service.impl;
 
 import com.example.travelblog.controller.request.BlogRequest;
 import com.example.travelblog.dao.BlogDao;
+import com.example.travelblog.exception.ResourceNotFoundException;
 import com.example.travelblog.exception.UnAuthrized;
 import com.example.travelblog.models.Blog;
 import com.example.travelblog.models.User;
@@ -30,7 +31,7 @@ public class BlogServiceImpl  implements BlogService {
 
     @Override
     public Blog getBlogById(long id) {
-        return blogDao.getBlogById(id);
+        return blogDao.getBlogById(id).orElseThrow();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class BlogServiceImpl  implements BlogService {
 
     @Override
     public Blog updateBlog(long id, BlogRequest blogRequest, User user) {
-        Blog blog = blogDao.getBlogById(id);
+        Blog blog = blogDao.getBlogById(id).orElseThrow();
         if (!Objects.equals(blog.getUser().getId(), user.getId()) && !user.isAdmin()) {
             throw new UnAuthrized("you not authrized to delete the post");
         }
@@ -59,10 +60,13 @@ public class BlogServiceImpl  implements BlogService {
     }
 
 
-    // TODO: 10/08/2023
     @Override
-    public void deleteBlog(long id) {
-
+    public void deleteBlog(long id, User user) {
+        Blog post = blogDao.getBlogById(id).orElseThrow(()-> new ResourceNotFoundException("post not found"));
+        if (!Objects.equals(post.getUser().getId(), user.getId()) && !user.isAdmin()) {
+            throw new UnAuthrized("you not authrized to delete the post");
+        }
+        blogDao.deleteBlog(id);
     }
 
     @Override
