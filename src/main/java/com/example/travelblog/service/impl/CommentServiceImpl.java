@@ -30,10 +30,15 @@ public class CommentServiceImpl implements CommentService {
     public Comment CreateComment(CommentRequest commentRequest, User user) {
         System.out.println(commentRequest.getPostId());
         Blog blog = blogDao.getBlogById(commentRequest.getPostId()).orElseThrow();
+
         Comment comment = new Comment();
         comment.setBlog(blog);
         comment.setUser(user);
         comment.setText(commentRequest.getText());
+        if (commentRequest.getCommentId() > 0) {
+            Comment parentComment = commentDao.getCommentById(commentRequest.getCommentId());
+            comment.setParentComment(parentComment);
+        }
         commentDao.CreateComment(comment);
 
         return comment;

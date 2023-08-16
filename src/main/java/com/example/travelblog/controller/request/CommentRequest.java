@@ -14,4 +14,6 @@ public class CommentRequest {
     String text;
 
     long PostId;
+
+    long commentId;
 }

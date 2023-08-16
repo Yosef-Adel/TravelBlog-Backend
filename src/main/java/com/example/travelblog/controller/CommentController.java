@@ -1,6 +1,7 @@
 package com.example.travelblog.controller;
 
 import com.example.travelblog.controller.request.CommentRequest;
+import com.example.travelblog.controller.response.MsgResponse;
 import com.example.travelblog.models.Comment;
 import com.example.travelblog.models.User;
 import com.example.travelblog.service.CommentService;
@@ -16,6 +17,8 @@ import java.util.List;
  * @author Yosef Adel Mahmoud Saaid
  */
 @RestController
+@CrossOrigin
+
 @RequestMapping("/api/v1/comment")
 @RequiredArgsConstructor
 public class CommentController {
@@ -28,21 +31,21 @@ public class CommentController {
 
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Authentication authentication) {
+    public MsgResponse delete(@PathVariable(name = "id") Long id, Authentication authentication) {
         System.out.println(authentication.getPrincipal());
-        commentService.deleteComment(id, (User) authentication.getPrincipal());
-        return "deleted";
+        boolean status = commentService.deleteComment(id, (User) authentication.getPrincipal());
+        return new MsgResponse("Comment deleted successfully", status);
     }
 
 
     @PatchMapping("/{id}")
-    public Comment updateUserData(@PathVariable(name = "id") Long id, @RequestBody CommentRequest commentRequest, Authentication authentication) {
+    public Comment updateComment(@PathVariable(name = "id") Long id, @RequestBody CommentRequest commentRequest, Authentication authentication) {
         return commentService.updateComment(id, commentRequest, (User) authentication.getPrincipal());
     }
 
 
-    @GetMapping("/post/{id}")
-    public List<Comment> getUserComment(@PathVariable(name = "id") Long id) {
+    @GetMapping("/blog/{id}")
+    public List<Comment> getCommentByBolgId(@PathVariable(name = "id") Long id) {
         return commentService.getCommentByPost(id);
     }
 

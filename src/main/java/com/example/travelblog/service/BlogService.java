@@ -21,7 +21,7 @@ public interface BlogService {
 
     Blog updateBlog(long id, BlogRequest blog, User user);
 
-    void deleteBlog(long id, User user);
+    boolean deleteBlog(long id, User user);
 
     List<Blog> getBlogsByUserId(long id);
 }

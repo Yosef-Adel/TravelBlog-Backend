@@ -16,6 +16,8 @@ public interface CommentDao {
 
     boolean deleteComment(long id);
 
+    boolean deleteCommentByBlogId(long id);
+
     List<Comment> getCommentByPost(long id);
 
     Comment getCommentById(long id);

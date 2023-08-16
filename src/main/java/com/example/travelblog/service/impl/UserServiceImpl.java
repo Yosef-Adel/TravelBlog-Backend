@@ -3,6 +3,7 @@ package com.example.travelblog.service.impl;
 import com.example.travelblog.controller.request.UserRequest;
 import com.example.travelblog.dao.RoleDao;
 import com.example.travelblog.dao.UserDao;
+import com.example.travelblog.exception.DuplicateResourceException;
 import com.example.travelblog.models.Role;
 import com.example.travelblog.models.User;
 import com.example.travelblog.service.UserService;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
     public User addUser(UserRequest user) {
 
         if (userDao.isEmailExist(user.getEmail())){
-            throw new UsernameNotFoundException("Email Already Exists.....");
+            throw new DuplicateResourceException("Email Already Exists.....");
         }
         String pass = user.getPassword();
         String hashPass = passwordEncoder.encode(pass);

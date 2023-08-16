@@ -2,6 +2,7 @@ package com.example.travelblog.service.impl;
 
 import com.example.travelblog.controller.request.BlogRequest;
 import com.example.travelblog.dao.BlogDao;
+import com.example.travelblog.dao.CommentDao;
 import com.example.travelblog.exception.ResourceNotFoundException;
 import com.example.travelblog.exception.UnAuthrized;
 import com.example.travelblog.models.Blog;
@@ -23,6 +24,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class BlogServiceImpl  implements BlogService {
     private final BlogDao blogDao;
+    private final CommentDao commentDao;
 
     @Override
     public List<Blog> getBlogs() {
@@ -61,12 +63,14 @@ public class BlogServiceImpl  implements BlogService {
 
 
     @Override
-    public void deleteBlog(long id, User user) {
+    public boolean deleteBlog(long id, User user) {
         Blog post = blogDao.getBlogById(id).orElseThrow(()-> new ResourceNotFoundException("post not found"));
         if (!Objects.equals(post.getUser().getId(), user.getId()) && !user.isAdmin()) {
             throw new UnAuthrized("you not authrized to delete the post");
         }
-        blogDao.deleteBlog(id);
+        commentDao.deleteCommentByBlogId(id);
+
+        return  blogDao.deleteBlog(id);
     }
 
     @Override

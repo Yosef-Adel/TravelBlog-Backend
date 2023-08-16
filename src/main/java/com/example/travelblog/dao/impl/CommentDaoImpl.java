@@ -38,6 +38,13 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
+    public boolean deleteCommentByBlogId(long id) {
+        List<Comment> comments = commentReporsitory.findCommentByPostId(id);
+        commentReporsitory.deleteAll(comments);
+        return true;
+    }
+
+    @Override
     public List<Comment> getCommentByPost(long id) {
         return commentReporsitory.findCommentByPostId(id);
     }

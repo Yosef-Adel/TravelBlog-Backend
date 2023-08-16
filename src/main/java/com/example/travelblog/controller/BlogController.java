@@ -7,6 +7,7 @@ package com.example.travelblog.controller;
  */
 
 import com.example.travelblog.controller.request.BlogRequest;
+import com.example.travelblog.controller.response.MsgResponse;
 import com.example.travelblog.models.Blog;
 import com.example.travelblog.models.User;
 import com.example.travelblog.service.BlogService;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1/blog")
+
 @RequiredArgsConstructor
 public class BlogController {
     private final BlogService blogService;
@@ -34,16 +37,17 @@ public class BlogController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Authentication authentication) {
+    public MsgResponse delete(@PathVariable(name = "id") Long id, Authentication authentication) {
         System.out.println(authentication.getPrincipal());
         blogService.deleteBlog(id, (User) authentication.getPrincipal());
-        return "deleted";
+        return new MsgResponse("Blog deleted successfully", true);
     }
 
     @GetMapping("/user/{id}")
     public List<Blog> getUserPosts(@PathVariable(name = "id") Long id) {
         return blogService.getBlogsByUserId(id);
     }
+
 
     @GetMapping("/{id}")
     public Blog getBlogById(@PathVariable(name = "id") Long id) {
